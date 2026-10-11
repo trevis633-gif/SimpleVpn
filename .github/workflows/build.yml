@@ -31,12 +31,15 @@ jobs:
 
       - name: Установить Android command-line tools
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
 
       - name: Android SDK и NDK
         run: |
           sdkmanager "platforms;android-37.0" "build-tools;37.0.0" || true
           sdkmanager "ndk;29.0.14206865"
           echo "NDK_HOME=$ANDROID_HOME/ndk/29.0.14206865" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/29.0.14206865" >> "$GITHUB_ENV"
           ls "$ANDROID_HOME/ndk"
           sed -i -E 's/ndkVersion *= *"[^"]*"/ndkVersion = "29.0.14206865"/' V2rayNG/app/build.gradle.kts || true
 
